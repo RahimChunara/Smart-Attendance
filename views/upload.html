@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload File</title>
+    <link rel="stylesheet" href="upload.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        body {
+            background-color: #269cfd;
+        }
+
+        .button {
+            background-color: #269cfd;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/action_page.php">
+        <div id="container-login">
+            <div id="title">
+                <i class="material-icons file_upload">file_upload</i>Upload Your File
+            </div>
+
+            <div class="input">
+                <div class="input-addon">
+                    <i class="material-icons attach_file">attach_file</i>
+                </div>
+                <input type="file" id="real-file" hidden="hidden" />
+                <div id="fileuploader">
+                <button type="button" id="custom-button">CHOOSE A FILE</button>
+                <span id="custom-text">No file chosen, yet.</span>
+                </div>
+                <script type="text/javascript">
+                    const realFileBtn = document.getElementById("real-file");
+                    const customBtn = document.getElementById("custom-button");
+                    const customTxt = document.getElementById("custom-text");
+
+                    customBtn.addEventListener("click", function () {
+                        realFileBtn.click();
+                    });
+
+                    realFileBtn.addEventListener("change", function () {
+                        if (realFileBtn.value) {
+                            customTxt.innerHTML = realFileBtn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+                        }
+                        else {
+                            customTxt.innerHTML = "No file chosen, yet.";
+                        }
+                    });
+                </script>
+                <div id='date'>
+                Date: <input type="date" name="day">
+                </div>
+                <input type="button" class="button" value="Submit">
+            </div>
+
+        </div>
+    </form>
+
+</body>
