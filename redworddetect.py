@@ -4,7 +4,7 @@ import pytesseract
 from PIL import Image
 from pytesseract import image_to_string
 
-
+src_path = "tes-img/"
 
 def get_string(img_path):
    
