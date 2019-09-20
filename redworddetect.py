@@ -4,7 +4,7 @@ import pytesseract
 from PIL import Image
 from pytesseract import image_to_string
 
-src_path = "tes-img/"
+
 
 def get_string(img_path):
    
@@ -12,27 +12,26 @@ def get_string(img_path):
 
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # Apply dilation and erosion to remove some noise
+    # noise redu
     kernel = np.ones((1, 1), np.uint8)
     img = cv2.dilate(img, kernel, iterations=1)
     img = cv2.erode(img, kernel, iterations=1)
 
-    # noise reduction
-    cv2.imwrite(src_path + "removed_noise.png", img)
 
-    # threshold:- img to b&w 
+    cv2.imwrite( "removed_noise.png", img)
+
+    # threshold 
     #img = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 2)
 
-    cv2.imwrite(src_path + "thres.png", img)
+    cv2.imwrite( "thres.png", img)
     
-    result = pytesseract.image_to_string(Image.open(src_path + "thres.png"))
+    result = pytesseract.image_to_string(Image.open( "thres.png"))
 
    
     return result
 
 
 print('below is then text thats read')
-print('-----------------------------------------------------------')
-print(get_string(src_path + "cont.jpg") )
-print('-----------------------------------------------------------')
+print(get_string( "cont.jpg") )
+
 print("The end")
