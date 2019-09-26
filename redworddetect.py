@@ -7,8 +7,9 @@ import cv2
 
 
 
+ANSWER_KEY = {0: 2, 1: 4, 2: 0, 3: 3, 4: 1}
+
 image = cv2.imread("test_01.png")
-cv2.imshow("image",image)
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 edged = cv2.Canny(blurred, 75, 200)
@@ -61,9 +62,10 @@ correct = 0
 
 
 for (q, i) in enumerate(np.arange(0, len(questionCnts), 5)):
-	
+
 	cnts = contours.sort_contours(questionCnts[i:i + 5])[0]
 	bubbled = None
+	g =0
 
 	for (j, c) in enumerate(cnts):
 		
@@ -72,26 +74,31 @@ for (q, i) in enumerate(np.arange(0, len(questionCnts), 5)):
     
 		mask = cv2.bitwise_and(thresh, thresh, mask=mask)
 		total = cv2.countNonZero(mask)
-
-		if bubbled is None or total > bubbled[0]:
-			bubbled = (total, j)
-
-	color = (0, 0, 255)
+        
+		print(bubbled)
+		bubbled = (total, j)
+		if bubbled > (500,0):
+				#bubbled = (total, j)
+				print(total)
+				g = g + 1
+                
+                
+	score = (g / 5.0) * 100
+	print(score)            
 	k = ANSWER_KEY[q]
 
-	if k == bubbled[1]:
-		color = (0, 255, 0)
-		correct += 1
-    score = (correct / 5.0) * 100
-	
-	cv2.drawContours(paper, [cnts[k]], -1, color, 3)
 
 
+	#if k == bubbled[1]:
+		#correct += 1
+		
+        
+print(gavin)
+#score = (gavin / 5.0) * 100
 #score = (correct / 5.0) * 100
 print("[INFO] score: {:.2f}%".format(score))
 cv2.putText(paper, "{:.2f}%".format(score), (10, 30),
 	cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
-cv2.imshow("Original", image)
+#cv2.imshow("Original", image)
 cv2.imshow("Exam", paper)
 cv2.waitKey(0)
-
