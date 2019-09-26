@@ -1,0 +1,29 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app",
+    "watch": "nodemon app && mongod"
+  },
+  "author": "Rahim",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.0.0",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "mongoose": "^5.7.1",
+    "nodemon": "^1.19.2",
+    "passport": "^0.4.0",
+    "pg": "^7.12.1",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
+}

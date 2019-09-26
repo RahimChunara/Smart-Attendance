@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    color: #F2F2F2;
+}
+
+#container-login {
+    background-color: #1D1F20;
+    position: relative;
+    top: 20%;
+    margin: auto;
+    width: 500px;
+    height: 450px;
+    border-radius: 0.35em;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-top: 15%;
+}
+
+#title {
+    position: relative;
+    background-color: #1A1C1D;
+    width: 100%;
+    padding: 20px 0px;
+    border-radius: 0.35em;
+    font-size: 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#fileuploader {
+    padding-bottom: 10%;
+}
+
+#date {
+    padding-bottom: 10%;
+}
+#custom-button {
+    padding: 15px 5px;
+    color: white;
+    background-color: #009578;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #custom-button:hover {
+    background-color: #00b28f;
+  }
+  
+  #custom-text {
+    margin-left: 10px;
+    font-family: sans-serif;
+    color: rgb(255, 255, 255);
+  }
+  
+.lock {
+	position: relative;
+	top: 2px;
+}
+
+.attach_file {
+	position: relative;
+	top: 2px;
+}
+
+.input {
+    margin: auto;
+    width: 400px;
+    border-radius: 4px;
+    background-color: #373b3d;
+    padding: 30px 20px;
+    margin-top: 10%;
+}
+
+.input-addon {
+    float: left;
+    background-color: #373b3d;
+    border: 1px solid #373b3d;
+    padding: 4px 8px;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+input[type=checkbox] {
+    cursor: pointer;
+}
+
+input[type=text] {
+    color: #949494;
+    margin: 0;
+    background-color: #373b3d;
+    border: 1px solid #373b3d;
+    padding: 6px 0px;
+    border-radius: 3px;
+}
+
+input[type=text]:focus {
+    border: 1px solid #373b3d;
+}
+
+input[type=password] {
+    color: #949494;
+    margin: 0;
+    background-color: #373b3d;
+    border: 1px solid #373b3d;
+    padding: 6px 0px;
+    border-radius: 3px;
+}
+
+input[type=password]:focus {
+    border: 1px solid #373b3d;
+}
+
+input[type=email] {
+    color: #949494;
+    margin: 0;
+    background-color: #373b3d;
+    border: 1px solid #373b3d;
+    padding: 6px 0px;
+    border-radius: 3px;
+}
+
+input[type=email]:focus {
+    border: 1px solid #373b3d;
+}
