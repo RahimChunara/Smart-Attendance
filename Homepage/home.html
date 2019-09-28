@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Home</title>
+	<link rel="stylesheet" href="styles.css">
+  <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" /> 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="home.html"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="#"><i class="fas fa-user"></i>Rahim</a></li>
+            <li><a href="#"><i class="fas fa-address-card"></i>Download</a></li>
+        </ul> 
+    </div>
+    <div class="main_content">
+        <div class="header">Welcome! Have a nice day.</div>  
+        <div class="container mt-3">
+            <h2>Please Enter The Details</h2>
+            <div class="d-flex flex-wrap align-content-center">
+                <form method="/" type="POST">
+                    <select name="Year" class="custom-select mb-3">
+                        <option selected>Year</option>
+                        <option year="FE">FE</option>
+                        <option year="SE">SE</option>
+                        <option year="TE">TE</option>
+                        <option year="BE">BE</option>
+                    </select>
+
+                    <select name="Branch" class="custom-select mb-3">
+                        <option selected>Branch</option>
+                        <option branch="COMPS">Computer</option>
+                        <option branch="IT">Information Technology</option>
+                        <option branch="ELEX">Electronics</option>
+                        <option branch="PROD">Production</option>
+                    </select>
+                <input type="datetime-local" id="date+time" ><br><br>      
+                <div class="field">
+                        <h3>Upload your images</h3>
+                        <input type="file" id="files" name="files[]" multiple />
+                </div>
+                <script>
+                     $(document).ready(function() {
+                    if (window.File && window.FileList && window.FileReader) {
+                    $("#files").on("change", function(e) {
+                    var files = e.target.files,
+                    filesLength = files.length;
+                    for (var i = 0; i < filesLength; i++) {
+                    var f = files[i]
+                    var fileReader = new FileReader();
+                    fileReader.onload = (function(e) {
+                    var file = e.target;
+                    $("<span class=\"pip\">" +
+                    "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                    "<br/><span class=\"remove\">Remove image</span>" +
+                    "</span>").insertAfter("#files");
+                    $(".remove").click(function(){
+                    $(this).parent(".pip").remove();
+                    });
+
+        });
+        fileReader.readAsDataURL(f);
+      }
+    });
+  } else {
+    alert("Your browser doesn't support to File API")
+  }
+});
+                </script>   
+                <div class="button-sub">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                </form>
+            </div>  
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
