@@ -6,14 +6,33 @@ import imutils
 import cv2
 
 
+#############   resize      ######################
+img = cv2.imread("big.jpg")
+print(img.shape)
 
-ANSWER_KEY = {0: 2, 1: 4, 2: 0, 3: 3, 4: 1}
 
-image = cv2.imread("test_01.png")
+
+scale_percent = 20 # percent of original size
+width = int(img.shape[1] * scale_percent / 100)
+height = int(img.shape[0] * scale_percent / 100)
+dim = (width, height)
+# resize image
+image = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
+
+
+print(image.shape)
+cv2.imshow("Original", image)
+
+#########################################################################
+
+
+
+
+#cv2.imshow("Original", image)
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 edged = cv2.Canny(blurred, 75, 200)
-
+#cv2.imshow("Original", image)
 
 cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
@@ -33,8 +52,11 @@ if len(cnts) > 0:
 		if len(approx) == 4:
 			docCnt = approx
 			break
-else :
-    print("get the picture of full image")
+	else :
+		print("get the picture of full image")
+    
+    
+
 paper = four_point_transform(image, docCnt.reshape(4, 2))
 warped = four_point_transform(gray, docCnt.reshape(4, 2))
 
@@ -85,7 +107,7 @@ for (q, i) in enumerate(np.arange(0, len(questionCnts), 5)):
                 
 	score = (g / 5.0) * 100
 	print(score)            
-	k = ANSWER_KEY[q]
+
 
 
 
@@ -93,12 +115,12 @@ for (q, i) in enumerate(np.arange(0, len(questionCnts), 5)):
 		#correct += 1
 		
         
-print(gavin)
+print(g)
 #score = (gavin / 5.0) * 100
 #score = (correct / 5.0) * 100
 print("[INFO] score: {:.2f}%".format(score))
 cv2.putText(paper, "{:.2f}%".format(score), (10, 30),
 	cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
-#cv2.imshow("Original", image)
+cv2.imshow("Original", image)
 cv2.imshow("Exam", paper)
 cv2.waitKey(0)
