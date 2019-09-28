@@ -5,31 +5,29 @@ import argparse
 import imutils
 import cv2
 
-
 #############   resize      ######################
-img = cv2.imread("big.jpg")
+img = cv2.imread("test6.jpg")
 print(img.shape)
 
 
 
-scale_percent = 20 # percent of original size
-width = int(img.shape[1] * scale_percent / 100)
-height = int(img.shape[0] * scale_percent / 100)
-dim = (width, height)
-# resize image
-image = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
+# scale_percent = 20 # percent of original size
+# width = int(img.shape[1] * scale_percent / 100)
+# height = int(img.shape[0] * scale_percent / 100)
+# dim = (width, height)
+# # resize image
+# image = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
 
 
-print(image.shape)
-cv2.imshow("Original", image)
+# print(image.shape)
+# cv2.imshow("Original", image)
+# cv2.waitKey(10000)
+# cv2.destroyAllWindows()
 
 #########################################################################
 
-
-
-
 #cv2.imshow("Original", image)
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 edged = cv2.Canny(blurred, 75, 200)
 #cv2.imshow("Original", image)
@@ -75,7 +73,7 @@ for c in cnts:
 	ar = w / float(h)
 
 	
-	if w >= 20 and h >= 20 and ar >= 0.9 and ar <= 1.1:
+	if w >= 10 and h >= 20 and ar >= 0.9 and ar <= 1.1:
 		questionCnts.append(c)
 
 
@@ -99,7 +97,7 @@ for (q, i) in enumerate(np.arange(0, len(questionCnts), 5)):
         
 		print(bubbled)
 		bubbled = (total, j)
-		if bubbled > (500,0):
+		if bubbled > (1000,0):
 				#bubbled = (total, j)
 				print(total)
 				g = g + 1
@@ -124,3 +122,4 @@ cv2.putText(paper, "{:.2f}%".format(score), (10, 30),
 cv2.imshow("Original", image)
 cv2.imshow("Exam", paper)
 cv2.waitKey(0)
+
