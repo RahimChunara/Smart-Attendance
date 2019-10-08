@@ -1,57 +1,54 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+const express = require('express');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash = require('connect-flash');
+const session = require('express-session');
 
-//connect to MongoDB
-mongoose.connect('mongodb://localhost/testForAuth');
+const app = express();
+
+app.use(express.static(__dirname + '/website'));
+
+// Passport Config
+require('./config/passport')(passport);
+
+// DB Config
+mongoose.connect('mongodb://localhost/IEEEProject');
 var db = mongoose.connection;
-// mongoose.set('useFindAndModify', false);
 
-//handle mongo error
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-});
+// EJS
+app.set('view engine', 'ejs');
 
-//use sessions for tracking logins
-app.use(session({
-  secret: 'project',
-  resave: true,
-  saveUninitialized: false,
-  store: new MongoStore({
-    mongooseConnection: db
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
+
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
   })
-}));
+);
 
-// parse incoming requests
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
+// Connect flash
+app.use(flash());
 
-// serve static files from template
-app.use(express.static(__dirname + '/Views'));
+// Global variables
+// app.use(function(req, res, next) {
+//   res.locals.success_msg = req.flash('success_msg');
+//   res.locals.error_msg = req.flash('error_msg');
+//   res.locals.error = req.flash('error');
+//   next();
+// });
 
-// include routes
-var routes = require('./routes/router');
-app.use('/', routes);
+// Routes
+app.use('/', require('./routes/index.js'));
+app.use('/users', require('./routes/users.js'));
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  var err = new Error('File Not Found');
-  err.status = 404;
-  next(err);
-});
+const PORT = process.env.PORT || 3000;
 
-// error handler
-// define as the last app.use callback
-app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.send(err.message);
-});
-
-// listen on port 3000
-app.listen(3000, function () {
-  console.log('Express app listening on port 3000');
-});
+app.listen(PORT, console.log(`Server started on port ${PORT}`));

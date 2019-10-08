@@ -19,6 +19,37 @@ body{
   position: relative;
 }
 
+input[type="file"] {
+  display: block;
+}
+.imageThumb {
+  max-height: 75px;
+  border: 2px solid;
+  padding: 1px;
+  cursor: pointer;
+}
+.pip {
+  display: inline-block;
+  margin: 25px 25px 0 0;
+}
+.remove {
+  display: block;
+  background: #444;
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  margin: 25px 25px 0 0;
+}
+.remove:hover {
+  background: white;
+  color: black;
+}
+
+.wrapper .main_content .container .d-flex .button-sub {
+  margin-top: 20px;
+}
+
 .wrapper .sidebar{
   width: 200px;
   height: 100%;
