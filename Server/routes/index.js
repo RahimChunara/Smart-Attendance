@@ -6,10 +6,15 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 router.get('/', forwardAuthenticated, (req, res) => res.render('login'));
 
 // Dashboard
-router.get('/upload', ensureAuthenticated, (req, res) =>
+router.get('/home', ensureAuthenticated, (req, res) =>
   res.render('upload', {
     user: req.user
   })
 );
 
+router.get('/portal', ensureAuthenticated, (req, res) =>
+  res.render('portal', {
+    user: req.user
+  })
+);
 module.exports = router;

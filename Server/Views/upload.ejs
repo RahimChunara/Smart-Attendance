@@ -20,18 +20,18 @@
     <div class="sidebar">
         <h2>Menu</h2>
         <ul>
-            <li><a href="upload.ejs"><i class="fas fa-home"></i>Home</a></li>
-            <li><a href="#"><i class="fas fa-user"></i>Rahim</a></li>
-            <li><a href="#"><i class="fas fa-address-card"></i>Download</a></li>
+            <li><a href="/home"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="/portal"><i class="fas fa-user"></i>Portal</a></li>
+            <!-- <li><a href="#"><i class="fas fa-address-card"></i>Download</a></li> -->
         </ul> 
     </div>
     <div class="main_content">
         <div class="header">Welcome! Have a nice day.</div>  
         <div class="container mt-3">
-            <h2>Please Enter The Details</h2>
+            <!-- <h2>Please Enter The Details</h2> -->
             <div class="d-flex flex-wrap align-content-center">
-                <form method="/" type="POST">
-                    <select name="Year" class="custom-select mb-3">
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <!-- <select name="Year" class="custom-select mb-3">
                         <option selected>Year</option>
                         <option year="FE">FE</option>
                         <option year="SE">SE</option>
@@ -46,10 +46,11 @@
                         <option branch="ELEX">Electronics</option>
                         <option branch="PROD">Production</option>
                     </select>
-                <input type="datetime-local" id="date+time" ><br><br>      
+                <input type="datetime-local" id="date+time" ><br><br>       -->
+                <br><br>
                 <div class="field">
                         <h3>Upload your images</h3>
-                        <input type="file" id="files" name="files[]" multiple />
+                        <input type="file" id="files" name="file" />
                 </div>
                 <script>
                      $(document).ready(function() {
