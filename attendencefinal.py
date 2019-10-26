@@ -4,30 +4,16 @@ import numpy as np
 import argparse
 import imutils
 import cv2
+import xlsxwriter
 
-#############   resize      ######################
-img = cv2.imread("test6.jpg")
-print(img.shape)
-
-
-
-# scale_percent = 20 # percent of original size
-# width = int(img.shape[1] * scale_percent / 100)
-# height = int(img.shape[0] * scale_percent / 100)
-# dim = (width, height)
-# # resize image
-# image = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+image = cv2.imread("test.jpg")
+print(image.shape)
 
 
-# print(image.shape)
-# cv2.imshow("Original", image)
-# cv2.waitKey(10000)
-# cv2.destroyAllWindows()
+workbook = xlsxwriter.Workbook('Attendence.xlsx')
+worksheet = workbook.add_worksheet("sheet")
 
-#########################################################################
-
-#cv2.imshow("Original", image)
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 edged = cv2.Canny(blurred, 75, 200)
 #cv2.imshow("Original", image)
@@ -57,9 +43,7 @@ if len(cnts) > 0:
 
 paper = four_point_transform(image, docCnt.reshape(4, 2))
 warped = four_point_transform(gray, docCnt.reshape(4, 2))
-
-# apply Otsu's thresholding method to binarize the warped
-# piece of paper
+#otsu threshold algo
 thresh = cv2.threshold(warped, 0, 255,cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
 
 cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
@@ -79,47 +63,34 @@ for c in cnts:
 
 questionCnts = contours.sort_contours(questionCnts,method="top-to-bottom")[0]
 correct = 0
-
-
+roll=8312
+#col = 0
+row = 0
 for (q, i) in enumerate(np.arange(0, len(questionCnts), 5)):
 
 	cnts = contours.sort_contours(questionCnts[i:i + 5])[0]
 	bubbled = None
 	g =0
-
+	col = 0
 	for (j, c) in enumerate(cnts):
-		
 		mask = np.zeros(thresh.shape, dtype="uint8")
 		cv2.drawContours(mask, [c], -1, 255, -1)
     
 		mask = cv2.bitwise_and(thresh, thresh, mask=mask)
 		total = cv2.countNonZero(mask)
         
-		print(bubbled)
 		bubbled = (total, j)
 		if bubbled > (1000,0):
-				#bubbled = (total, j)
-				print(total)
+				#print(total)
 				g = g + 1
                 
                 
 	score = (g / 5.0) * 100
-	print(score)            
-
-
-
-
-	#if k == bubbled[1]:
-		#correct += 1
-		
+	worksheet.write(row, col, roll) 
+	worksheet.write(row, col + 1, score) 
+	row += 1
+	roll=roll+1
+	#print(score)
         
-print(g)
-#score = (gavin / 5.0) * 100
-#score = (correct / 5.0) * 100
-print("[INFO] score: {:.2f}%".format(score))
-cv2.putText(paper, "{:.2f}%".format(score), (10, 30),
-	cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
-cv2.imshow("Original", image)
-cv2.imshow("Exam", paper)
 cv2.waitKey(0)
-
+workbook.close()
