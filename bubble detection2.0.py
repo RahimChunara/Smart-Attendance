@@ -6,8 +6,8 @@ import imutils
 import cv2
 
 #############   resize      ######################
-img = cv2.imread("test6.jpg")
-print(img.shape)
+image = cv2.imread("test.jpg")
+print(image.shape)
 
 
 
@@ -26,11 +26,10 @@ print(img.shape)
 
 #########################################################################
 
-#cv2.imshow("Original", image)
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 edged = cv2.Canny(blurred, 75, 200)
-#cv2.imshow("Original", image)
 
 cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
@@ -58,8 +57,7 @@ if len(cnts) > 0:
 paper = four_point_transform(image, docCnt.reshape(4, 2))
 warped = four_point_transform(gray, docCnt.reshape(4, 2))
 
-# apply Otsu's thresholding method to binarize the warped
-# piece of paper
+# apply Otsu's thresholding method to binarize the warped piece of paper
 thresh = cv2.threshold(warped, 0, 255,cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
 
 cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
@@ -79,7 +77,7 @@ for c in cnts:
 
 questionCnts = contours.sort_contours(questionCnts,method="top-to-bottom")[0]
 correct = 0
-
+roll=8312
 
 for (q, i) in enumerate(np.arange(0, len(questionCnts), 5)):
 
@@ -95,31 +93,13 @@ for (q, i) in enumerate(np.arange(0, len(questionCnts), 5)):
 		mask = cv2.bitwise_and(thresh, thresh, mask=mask)
 		total = cv2.countNonZero(mask)
         
-		print(bubbled)
 		bubbled = (total, j)
 		if bubbled > (1000,0):
-				#bubbled = (total, j)
-				print(total)
 				g = g + 1
                 
                 
 	score = (g / 5.0) * 100
-	print(score)            
-
-
-
-
-	#if k == bubbled[1]:
-		#correct += 1
-		
+	print(roll,":-",score) 
+	roll=roll+1
         
-print(g)
-#score = (gavin / 5.0) * 100
-#score = (correct / 5.0) * 100
-print("[INFO] score: {:.2f}%".format(score))
-cv2.putText(paper, "{:.2f}%".format(score), (10, 30),
-	cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
-cv2.imshow("Original", image)
-cv2.imshow("Exam", paper)
 cv2.waitKey(0)
-
